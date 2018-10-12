@@ -1,0 +1,59 @@
+{
+    "training_data": "training_data.json",
+    "pipeline": [
+        {
+            "class": "rasa_nlu.featurizers.count_vectors_featurizer.CountVectorsFeaturizer",
+            "strip_accents": null,
+            "max_ngram": 1,
+            "name": "intent_featurizer_count_vectors",
+            "token_pattern": "(?u)\\b\\w\\w+\\b",
+            "featurizer_file": "intent_featurizer_count_vectors.pkl",
+            "lowercase": true,
+            "stop_words": null,
+            "max_df": 1.0,
+            "min_ngram": 1,
+            "OOV_token": null,
+            "min_df": 1,
+            "max_features": null,
+            "OOV_words": []
+        },
+        {
+            "num_hidden_layers_b": 0,
+            "evaluate_on_num_examples": 1000,
+            "evaluate_every_num_epochs": 10,
+            "hidden_layer_size_a": [
+                256,
+                128
+            ],
+            "classifier_file": "intent_classifier_tensorflow_embedding.ckpt",
+            "mu_pos": 0.8,
+            "hidden_layer_size_b": [],
+            "mu_neg": -0.4,
+            "use_max_sim_neg": true,
+            "droprate": 0.2,
+            "intent_split_symbol": "_",
+            "C2": 0.002,
+            "epochs": 300,
+            "batch_size": [
+                64,
+                256
+            ],
+            "name": "intent_classifier_tensorflow_embedding",
+            "num_neg": 20,
+            "intent_tokenization_flag": false,
+            "class": "rasa_nlu.classifiers.embedding_intent_classifier.EmbeddingIntentClassifier",
+            "embed_dim": 20,
+            "C_emb": 0.8,
+            "similarity_type": "cosine",
+            "num_hidden_layers_a": 2
+        },
+        {
+            "class": "rasa_nlu.extractors.duckling_extractor.DucklingExtractor",
+            "name": "ner_duckling",
+            "dimensions": null
+        }
+    ],
+    "language": "en",
+    "trained_at": "20181003-160045",
+    "rasa_nlu_version": "0.13.4"
+}

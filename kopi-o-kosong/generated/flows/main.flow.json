@@ -1,0 +1,91 @@
+{
+  "version": "0.1",
+  "catchAll": {
+    "onReceive": [],
+    "next": [
+      {
+        "condition": "event.nlu.intent.is('check_leave')",
+        "node": "leave_check.flow.json"
+      },
+      {
+        "condition": "event.nlu.intent.is('apply_leave')",
+        "node": "leave_apply.flow.json"
+      },
+      {
+        "condition": "event.nlu.intent.is('update_leave')",
+        "node": "leave_update.flow.json"
+      },
+      {
+        "condition": "event.nlu.intent.is('sap')",
+        "node": "sap.flow.json"
+      },
+      {
+        "condition": "event.nlu.intent.is('exit')",
+        "node": "exit.flow.json"
+      }
+    ]
+  },
+  "startNode": "Main_opening",
+  "nodes": [
+    {
+      "id": "07ed24c0de",
+      "name": "Main_opening",
+      "next": [
+        {
+          "condition": "true",
+          "node": ""
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-lflYLH"
+      ],
+      "onReceive": []
+    },
+    {
+      "id": "c43060e6d3",
+      "name": "entry_question",
+      "next": [
+        {
+          "condition": "event.text == \"E-HR system\"",
+          "node": "sap.flow.json"
+        },
+        {
+          "condition": "true",
+          "node": "error_choice"
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_single-choice-KYby5U"
+      ],
+      "onReceive": []
+    },
+    {
+      "id": "411c801a11",
+      "name": "error_choice",
+      "next": [
+        {
+          "condition": "true",
+          "node": "entry_question"
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-QlTGzx"
+      ],
+      "onReceive": null
+    },
+    {
+      "id": "9e095ff0fb",
+      "name": "otw_ask_name",
+      "next": [
+        {
+          "condition": "true",
+          "node": ""
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-TXfdDI"
+      ],
+      "onReceive": null
+    }
+  ]
+}

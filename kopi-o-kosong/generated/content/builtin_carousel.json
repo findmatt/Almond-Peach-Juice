@@ -1,0 +1,26 @@
+[
+  {
+    "id": "builtin_carousel-dXfNXA",
+    "formData": [
+      {
+        "title": "carousel",
+        "subtitle": "array of crds",
+        "actions": [
+          {
+            "title": "card 1 url",
+            "action": "Open URL",
+            "url": "https://botpress.io/docs/latest/reference/DialogStateManager.html#.getState"
+          },
+          {
+            "title": "card 2 url",
+            "action": "Open URL",
+            "url": "https://botpress.io/docs/latest/reference/DialogStateManager.html#.getState"
+          }
+        ],
+        "typing": true
+      }
+    ],
+    "createdBy": "admin",
+    "createdOn": "2018-09-05T04:40:18.969Z"
+  }
+]

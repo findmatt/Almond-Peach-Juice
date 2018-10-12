@@ -1,0 +1,11 @@
+language: "en"
+
+# www.rasa.com/docs/nlu/choosing_pipeline/
+# www.rasa.com/docs/nlu/components/
+# www.rasa.com/docs/nlu/entities/
+#"ner_duckling"  pre-trained entity recognition
+
+pipeline: 
+  - name: "intent_featurizer_count_vectors"
+  - name: "intent_classifier_tensorflow_embedding" 
+  - name: "ner_duckling" # pre-trained entity recognition

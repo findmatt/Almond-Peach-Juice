@@ -1,0 +1,36 @@
+[
+  {
+    "id": "builtin_card-pF8x6G",
+    "formData": {
+      "title": "card title",
+      "subtitle": "card subtitle",
+      "actions": [
+        {
+          "title": "url",
+          "action": "Open URL",
+          "url": "https://botpress.io/docs/latest/reference/DialogStateManager.html#.getState"
+        }
+      ],
+      "typing": true
+    },
+    "createdBy": "admin",
+    "createdOn": "2018-09-05T04:31:31.861Z"
+  },
+  {
+    "id": "builtin_card-NHOC__",
+    "formData": {
+      "title": "Leave statement",
+      "subtitle": "Link to show your current leave statement",
+      "actions": [
+        {
+          "title": "URL",
+          "action": "Open URL",
+          "url": "https://botpress.io/docs/latest/reference/DialogStateManager.html#.getState"
+        }
+      ],
+      "typing": true
+    },
+    "createdBy": "admin",
+    "createdOn": "2018-09-05T04:37:25.304Z"
+  }
+]

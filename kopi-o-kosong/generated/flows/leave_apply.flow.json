@@ -1,0 +1,224 @@
+{
+  "version": "0.1",
+  "catchAll": {
+    "onReceive": [],
+    "next": [
+      {
+        "condition": "event.nlu.intent.is('leave_update')",
+        "node": "leave_update.flow.json"
+      },
+      {
+        "condition": "event.nlu.intent.is('leave_check')",
+        "node": "leave_check.flow.json"
+      },
+      {
+        "condition": "event.nlu.intent.is('exit')",
+        "node": "exit.flow.json"
+      }
+    ]
+  },
+  "startNode": "entry",
+  "nodes": [
+    {
+      "id": "d5f9808c7c",
+      "name": "entry",
+      "onEnter": [
+        "say #!builtin_text-gqedHg"
+      ],
+      "onReceive": null,
+      "next": [
+        {
+          "condition": "true",
+          "node": "Apply_leave_begda-copy"
+        }
+      ]
+    },
+    {
+      "id": "c5b83605ac",
+      "name": "Apply_leave_begda-copy",
+      "next": [
+        {
+          "condition": "state.result == \"OK\"",
+          "node": "Apply_leave_endda-copy"
+        },
+        {
+          "condition": "event.nlu.intent.is('leave_apply')",
+          "node": "node-1150"
+        },
+        {
+          "condition": "true",
+          "node": "invalid_date-copy"
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-l2UgMV"
+      ],
+      "onReceive": [
+        "setDateTag {\"date\":\"begda\",\"value\":\"{{event.text}}\"}"
+      ]
+    },
+    {
+      "id": "bc6c378143",
+      "name": "Apply_leave_endda-copy",
+      "next": [
+        {
+          "condition": "state.result == \"OK\"",
+          "node": "apl_lea_ann-copy"
+        },
+        {
+          "condition": "event.nlu.intent.is('leave_apply')",
+          "node": "node-1150"
+        },
+        {
+          "condition": "true",
+          "node": "invalid_date-copy"
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-3XsORS"
+      ],
+      "onReceive": [
+        "setDateTag {\"date\":\"endda\",\"value\":\"{{event.text}}\"}"
+      ]
+    },
+    {
+      "id": "13fcca55a3",
+      "name": "apl_lea_ann-copy",
+      "next": [
+        {
+          "condition": "state.result == \"OK\"",
+          "node": "apply_result_ok"
+        },
+        {
+          "condition": "true",
+          "node": "apply_result_fail"
+        }
+      ],
+      "onEnter": [
+        "getDateTag {\"date\":\"begda\",\"into\":\"begda\"}",
+        "getDateTag {\"date\":\"endda\",\"into\":\"endda\"}",
+        "SAP_INTERFACE {\"name\":\"{{state.username}}\",\"begda\":\"{{state.begda}}\",\"endda\":\"{{state.endda}}\"}"
+      ],
+      "onReceive": null
+    },
+    {
+      "id": "ed10dc98a8",
+      "name": "invalid_date-copy",
+      "next": [
+        {
+          "condition": "true",
+          "node": "Apply_leave_begda-copy"
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-X1YUx~"
+      ],
+      "onReceive": null
+    },
+    {
+      "id": "10fea1747c",
+      "type": "skill-call",
+      "skill": "choice",
+      "name": "choice-fd8297",
+      "flow": "skills/choice-fd8297.flow.json",
+      "next": [
+        {
+          "condition": "state['skill-choice-ret'] == \"check leave\"",
+          "node": "leave_check.flow.json"
+        },
+        {
+          "condition": "state['skill-choice-ret'] == \"update leave\"",
+          "node": "leave_update.flow.json"
+        },
+        {
+          "condition": "state['skill-choice-ret'] == \"exit\"",
+          "node": "exit.flow.json"
+        },
+        {
+          "condition": "event.nlu.intent.is('leave_apply')",
+          "node": "entry"
+        },
+        {
+          "condition": "true",
+          "node": "#choice-fd8297"
+        }
+      ],
+      "onEnter": null,
+      "onReceive": null
+    },
+    {
+      "id": "7f8d769d4a",
+      "type": "skill-call",
+      "skill": "choice",
+      "name": "choice-b7c979",
+      "flow": "skills/choice-b7c979.flow.json",
+      "next": [
+        {
+          "caption": "User picked [contact...]",
+          "condition": "state['skill-choice-ret'] == \"contact assistant\"",
+          "node": ""
+        },
+        {
+          "condition": "state['skill-choice-ret'] == \"exit\"",
+          "node": "exit.flow.json"
+        },
+        {
+          "condition": "state['skill-choice-ret'] == \"check leave\"",
+          "node": "leave_check.flow.json"
+        },
+        {
+          "condition": "state['skill-choice-ret'] == \"update leave\"",
+          "node": "leave_update.flow.json"
+        },
+        {
+          "condition": "true",
+          "node": "#choice-b7c979"
+        }
+      ],
+      "onEnter": null,
+      "onReceive": null
+    },
+    {
+      "id": "18ace8840b",
+      "name": "node-1150",
+      "next": [
+        {
+          "condition": "true",
+          "node": "Apply_leave_begda-copy"
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-Lfvn1j"
+      ],
+      "onReceive": null
+    },
+    {
+      "id": "8d90858085",
+      "name": "apply_result_ok",
+      "next": [
+        {
+          "condition": "true",
+          "node": "choice-fd8297"
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-ZU8PCu"
+      ],
+      "onReceive": null
+    },
+    {
+      "id": "85d3f42b6d",
+      "name": "apply_result_fail",
+      "next": [
+        {
+          "condition": "true",
+          "node": "choice-b7c979"
+        }
+      ],
+      "onEnter": [
+        "say #!builtin_text-3pcn1C"
+      ],
+      "onReceive": null
+    }
+  ]
+}

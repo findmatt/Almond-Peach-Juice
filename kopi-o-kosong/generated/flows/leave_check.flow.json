@@ -1,0 +1,32 @@
+{
+  "version": "0.1",
+  "catchAll": {
+    "onReceive": [],
+    "next": [
+      {
+        "condition": "event.nlu.intent.is('leave_update')",
+        "node": "leave_update.flow.json"
+      },
+      {
+        "condition": "event.nlu.intent.is('leave_apply')",
+        "node": "leave_apply.flow.json"
+      },
+      {
+        "condition": "event.nlu.intent.is('exit')",
+        "node": "exit.flow.json"
+      }
+    ]
+  },
+  "startNode": "entry",
+  "nodes": [
+    {
+      "id": "cddc0a9b72",
+      "name": "entry",
+      "onEnter": [
+        "say #!builtin_card-NHOC__"
+      ],
+      "onReceive": [],
+      "next": []
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+model_checkpoint_path: "c:\\Users\\jesmond.lee\\rasa_dump\\starter-pack\\models\\dev__current__all\\model_20181012-102108\\intent_classifier_tensorflow_embedding.ckpt"
+all_model_checkpoint_paths: "c:\\Users\\jesmond.lee\\rasa_dump\\starter-pack\\models\\dev__current__all\\model_20181012-102108\\intent_classifier_tensorflow_embedding.ckpt"

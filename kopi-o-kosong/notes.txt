@@ -1,0 +1,122 @@
+node -v 8.11.3
+npm --version 5.6.0
+botpress --version 10.33.0
+
+clear port number
+netstat -ano | findstr :3000
+taskkill /PID typeyourPIDhere /F or taskkill /f /im node.exe
+close npm cmd
+
+##########################################################################
+Setup 
+##########################################################################
+install nodejs via install [server PC]
+copy node_modules to offline [server PC]
+https://www.npmjs.com/package/node-pre-gyp [npm install node-pre-gyp@0.11.0]
+https://www.npmjs.com/package/node-gyp [npm install node-gyp@3.8.0]
+http://sap.github.io/node-rfc/install.html - required in running [npm install node-rfc@next]
+https://github.com/SAP/node-rfc - required for SAP RFC, NW RFC is backward compatible [tr PC]
+https://wiki.scn.sap.com/wiki/display/ABAPConn/Download+and+Installation+of+NW+RFC+SDK 
+alternative to node-rfc? https://www.npmjs.com/package/sapnwrfc [client PC]
+
+List of RFC error messages https://help.sap.com/doc/saphelp_nwmobile71/7.1.18/de-DE/45/ec56cdd90860d4e10000000a11466f/content.htm?no_cache=true
+RFC_COMMUNICATION_FAILURE
+
+Only 1 invoke per method at anytime, otherwise will give error
+
+debug nodejs https://github.com/node-inspector/node-inspector
+debug node module http://www.dependencywalker.com/
+
+Embedding
+https://botpress.io/docs/latest/recipes/embedding/
+
+Saving variable from users input
+https://botpress.io/docs/10.0/getting_started/trivia_flows/
+https://botpress.io/docs/10.0/getting_started/trivia_storage/
+
+C:\Users\jesmond.lee\kopi-o-kosong
+
+##########################################################################
+Botpress 
+##########################################################################
+onEntry - Ask single question/ choice questions with selection box
+onReceive - Validation purposes
+onExit - determine which flow to proceed based on the state variables
+Each chat has a global variable named state.variableName
+=== equal value and type, !== not equal value and type, && and, || or
+
+Design pattern
+Validation of success and failure path best exit to two nodes handling.
+Eg, Question_node -> expected answer_node -> handling to process to next node
+					-> unexpected answer_node -> handling to return Question_node
+
+Change the UI of chatbox
+https://www.npmjs.com/package/botpress-platform-webchat
+##########################################################################
+RASA Training
+##########################################################################
+https://rasa.com/docs/nlu/0.13.4/quickstart/
+python -m rasa_nlu.train -c nlu_config.yml --data data\nlu_data -o models --project current --verbose
+
+##########################################################################
+RASA Sever
+##########################################################################
+https://rasa.com/docs/nlu/config/
+anaconda cmd navigate to c:\Users\jesmond.lee\Botpress\Rasa\
+python -m rasa_nlu.server --path models --config nlu_config.yml
+
+RASA upgrade
+pip install rasa_nlu upgrade
+
+##########################################################################
+RASA pipline
+##########################################################################
+NLU pipeline @ c:\Users\jesmond.lee\rasa_dump\starter-pack\nlu_config.yml
+https://rasa.com/docs/nlu/choosing_pipeline/
+tensorflow_embedding = no pretrained word vector, fits specifically for your dataset
+	+ customized to your domain
+	+ split intent into multiple labels, use intent_tokenization_flag. example https://blog.rasa.com/how-to-handle-multiple-intents-per-input-using-rasa-nlu-tensorflow-pipeline/
+		+ pipeline: 
+			- name: "intent_featurizer_count_vectors"
+			- name: "intent_classifier_tensorflow_embedding"
+	+ usually high confidence (could be over fitting)
+spacy_sklearn = pretrained word vectors from either GloVe or fastText.
+	+ useful when limited training data
+	- usually low confidence (not a true probability that prediction is correct, just a metric defined by the model that approximately describe how similar your input was to the training data)
+	
+##########################################################################
+RASA Entities
+##########################################################################
+NLU entities @ c:\Users\jesmond.lee\rasa_dump\starter-pack\nlu_config.yml
+https://rasa.com/docs/nlu/entities/
+
+##########################################################################
+RASA Evaluating and Improving
+##########################################################################
+https://rasa.com/docs/nlu/evaluation/
+
+1. Evaluating with test data
+This will output the test data spread with numbers of test data in which of the intent.
+python -m rasa_nlu.evaluate --data data/xxxxxxx.json --model projects/default/model_xxxxxxxx 
+
+real example in anaconda cmd @ c:\Users\jesmond.lee\rasa_dump\starter-pack\
+python -m rasa_nlu.evaluate --data data/nlu_data --model models/dev__current__all/model_20180913-180910
+
+2. Evaluating with cross validation (no separate test data)
+A new model will be train each cross validation executes.
+python -m rasa_nlu.evaluate --data data/examples/rasa/demo-rasa.json --config sample_configs/config_spacy.yml --mode crossvalidation
+
+real example in anaconda cmd @ c:\Users\jesmond.lee\rasa_dump\starter-pack\
+python -m rasa_nlu.evaluate --data data/nlu_data --config nlu_config.yml --mode crossvalidation
+
+##########################################################################
+RASA Training
+##########################################################################
+https://rasa.com/docs/nlu/dataformat/
+Markdown format
+JSON format
+
+python -m rasa_nlu.train --config config.yml --data nlu_data/ --path projects
+	
+Since we are using botpress, we can ignore this section. As botpress has its own format and will align to support RASA according to the documentation.
+
