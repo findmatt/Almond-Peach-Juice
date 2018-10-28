@@ -4,4 +4,4 @@ const bot = new Botpress({ botfile: require('./botfile.js') })
 bot.start()
 // end of botpress
 
-module.exports = require('./src/index')
+module.exports = require('./src/index') 
